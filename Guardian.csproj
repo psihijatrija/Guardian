@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- WinExe = no console window; Guardian runs silently as a background guard. -->
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>Guardian</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <DebugType>none</DebugType>
+    <Deterministic>true</Deterministic>
+    <!-- Don't emit Guardian.exe.config; the exe is a standalone single file. -->
+    <GenerateSupportedRuntime>false</GenerateSupportedRuntime>
+    <!-- Needed for NotifyIcon (toast alerts) and System.ServiceProcess. -->
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Management" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Troll's helper tools embedded so the whole project ships as one exe.
+         .NET Framework 4.8 is present on all Win10/11, so no runtime is bundled. -->
+    <EmbeddedResource Include="SetACL.exe">
+      <LogicalName>Guardian.SetACL.exe</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="devcon.exe">
+      <LogicalName>Guardian.devcon.exe</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
